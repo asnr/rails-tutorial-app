@@ -7,4 +7,10 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }
+
+  def User.digest(string)
+    # hmm... is there no better interface for this?
+    temp_user = User.new password: string
+    temp_user.password_digest
+  end
 end
