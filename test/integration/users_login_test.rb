@@ -54,4 +54,16 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     log_in_as(@user, remember_me: '0')
     assert_empty cookies['remember_token']
   end
+
+  test 'friendly forwarding only redirects first subsequent login' do
+    get edit_user_path(@user)
+    assert_redirected_to login_path
+    log_in_as(@user)
+    assert_redirected_to edit_user_path(@user)
+
+    delete logout_path
+    log_in_as(@user)
+    assert_redirected_to @user
+  end
+
 end
