@@ -16,15 +16,19 @@ class UsersEditTest < ActionDispatch::IntegrationTest
   end
 
   test 'successful edit' do
-    skip('Need to finish writing test (RED) and then need to implement it (GREEN)')
+    get edit_user_path(@user)
+    assert_template 'users/edit'
     new_name = 'Sally User'
+    new_email = 'sally@user.com'
     patch user_path(@user),
          params: { user: { name: new_name,
-                           email: @user.email,
-                           password: 'password',
-                           password_confirmation: 'password' } }
-    assert_template 'users/show'
-    assert_select 'div.alert-success', count: 1
-    assert_select 'h1', new_name
+                           email: new_email,
+                           password: '',
+                           password_confirmation: '' } }
+    assert !flash.empty?
+    assert_redirected_to @user
+    @user.reload
+    assert_equal new_name, @user.name
+    assert_equal new_email, @user.email
   end
 end
