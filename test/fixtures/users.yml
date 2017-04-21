@@ -2,8 +2,12 @@ fred:
   name: Fred Blap
   email: fred@blap.com
   password_digest: <%= User.digest('password') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 amy:
   name: Amy Floop
   email: amy@floop.org
   password_digest: <%= User.digest('password') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
