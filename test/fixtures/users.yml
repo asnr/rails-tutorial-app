@@ -13,11 +13,20 @@ amy:
   activated: true
   activated_at: <%= Time.zone.now %>
 
-<% 30.times do |n| %>
+jess:
+  name: Jess Person
+  email: jess@person.com
+  password_digest: <%= User.digest('password') %>
+  activated: false
+
+<% 60.times do |n| %>
 user_<%= n %>:
   name: User <%= n %>
   email: user-<%= n%>@example.com
   password_digest: <%= User.digest('password') %>
-  activated: true
+  <% activated = (n % 2 == 0) %>
+  activated: <%= activated %>
+  <% if activated %>
   activated_at: <%= Time.zone.now %>
+  <% end %>
 <% end %>
