@@ -77,4 +77,12 @@ class UserTest < ActiveSupport::TestCase
   test 'authenticated? should return false for a user with nil digest' do
     assert_not @user.authenticated?(:remember, '')
   end
+
+  test "should delete user's posts when user is deleted" do
+    @user.save
+    micropost = @user.microposts.create content: 'Some content'
+    assert_difference 'Micropost.count', -1 do
+      @user.destroy
+    end
+  end
 end

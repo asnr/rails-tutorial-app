@@ -23,3 +23,5 @@
 # Ignore vim temporary files
 *.swp
 *~
+
+public/uploads/
